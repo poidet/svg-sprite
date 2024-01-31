@@ -61,7 +61,7 @@ const props = defineProps({
   }
 })
 
-useHead({ title: 'Icons list - @nuxtjs/svg-sprite' })
+useHead({ title: 'Icons list - @poidet/svg-sprite' })
 
 const query = ref('')
 const filteredSprites = computed(() => {

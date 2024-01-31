@@ -28,7 +28,7 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: '@nuxtjs/svg-sprite',
+    name: '@poidet/svg-sprite',
     configKey: 'svgSprite',
     compatibility: {
       nuxt: '>=3.0.0'
