@@ -4,5 +4,8 @@ export default defineNuxtConfig({
   modules: [
     // @ts-ignore
     svgModule
-  ]
+  ],
+  svgSprite: {
+    alias: '#icons'
+  }
 })

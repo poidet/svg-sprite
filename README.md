@@ -71,6 +71,7 @@ Module default options:
 | iconsPath         | `_icons`              | Custom path for icons list page (In order to disable this page)                                          |
 | pageIcons         | `_false`              | Showing a page with all the icons                                                                        |
 | svgoConfig        | `null`                | Custom config object for SVGO, [How to customize SVGO config](/docs/svgo-config.md)                      |
+| alias             | `#sprite`             | Alias of the icon collection                                                                             |
 
 You can update them with the `svgSprite` option in `nuxt.config`:
 

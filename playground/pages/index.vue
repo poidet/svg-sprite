@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 
-import { Love } from '#sprite'
+import { Love } from '#icons'
 
 const aboutNuxt = 'Nuxt.js presets all the configuration needed to make your development of a Vue.js application enjoyable.'
 </script>

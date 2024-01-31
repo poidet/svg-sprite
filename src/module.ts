@@ -20,6 +20,7 @@ import { createSpritesManager, useSvgFile } from './utils'
 export interface ModuleOptions {
   input: string
   output: string
+  alias: string,
   pageIcons: boolean,
   iconsPath: string,
   defaultSprite: string
@@ -40,6 +41,7 @@ export default defineNuxtModule<ModuleOptions>({
     defaultSprite: 'icons',
     pageIcons: true,
     iconsPath: '/_icons',
+    alias: '#sprite',
     optimizeOptions: {
       plugins: [
         {
@@ -105,7 +107,7 @@ export default defineNuxtModule<ModuleOptions>({
         sprites
       }
     })
-    nuxt.options.alias['#sprite'] = addTemplate({
+    nuxt.options.alias[options.alias] = addTemplate({
       ...iconCollectionTemplate,
       write: true,
       options: {
