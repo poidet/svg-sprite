@@ -5,3 +5,4 @@ dist
 .nuxt-storybook
 .DS_Store
 coverage
+.idea
