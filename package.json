@@ -2,7 +2,10 @@
     "name": "@poidet/svg-sprite",
     "version": "1.0.0",
     "description": "Easy way to use and optimize svg files in Nuxt.js",
-    "repository": "poidet/svg-sprite",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/poidet/svg-sprite.git"
+    },
     "license": "MIT",
     "exports": {
         ".": {
