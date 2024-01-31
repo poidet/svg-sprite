@@ -45,7 +45,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { icons } from '#svg-sprite-icons'
-import { useHead } from '#imports'
+import { useHead, definePageMeta } from '#imports'
 
 definePageMeta({
   layout: 'svg-sprite'
