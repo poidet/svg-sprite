@@ -1,30 +1,30 @@
 {
-  "name": "nuxt-svg-sprite-docs",
-  "version": "1.0.0",
-  "description": "Easy way to use and optimize svg files in Nuxt.js",
-  "repository": "nuxt-community/svg-sprite-module",
-  "license": "MIT",
-  "scripts": {
-    "dev": "nuxi dev",
-    "build": "nuxi build",
-    "generate": "nuxi build",
-    "preview": "nuxi preview"
-  },
-  "dependencies": {
-    "@nuxt-themes/docus": "^1.15.0",
-    "@nuxthq/studio": "^1.0.2",
-    "nuxt": "^3.8.0"
-  },
-  "packageManager": "pnpm@8.1.0",
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "vue": "^3.2.45"
-      },
-      "ignoreMissing": [
-        "webpack",
-        "vue"
-      ]
-    }
-  }
+	"name": "nuxt-svg-sprite-docs",
+	"version": "1.0.0",
+	"packageManager": "pnpm@8.1.0",
+	"description": "Easy way to use and optimize svg files in Nuxt.js",
+	"license": "MIT",
+	"repository": "nuxt-community/svg-sprite-module",
+	"scripts": {
+		"dev": "nuxi dev",
+		"build": "nuxi build",
+		"generate": "nuxi build",
+		"preview": "nuxi preview"
+	},
+	"dependencies": {
+		"@nuxt-themes/docus": "^1.15.1",
+		"@nuxthq/studio": "^2.2.1",
+		"nuxt": "^4.0.3"
+	},
+	"pnpm": {
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"vue": "^3.2.45"
+			},
+			"ignoreMissing": [
+				"webpack",
+				"vue"
+			]
+		}
+	}
 }

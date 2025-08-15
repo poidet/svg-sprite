@@ -1,70 +1,79 @@
 {
-    "name": "@poidet/svg-sprite",
-    "version": "1.1.0",
-    "description": "Easy way to use and optimize svg files in Nuxt.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/poidet/svg-sprite.git"
-    },
-    "license": "MIT",
-    "exports": {
-        ".": {
-            "import": "./dist/module.mjs",
-            "require": "./dist/module.cjs"
-        }
-    },
-    "main": "./dist/module.cjs",
-    "module": "./dist/module.mjs",
-    "types": "./dist/types.d.ts",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "build": "nuxt-module-build build",
-        "dev": "nuxi dev playground",
-        "dev:docs": "nuxi dev docs",
-        "dev:build": "nuxi build playground",
-        "dev:prepare": "nuxt-module-build build --stub && nuxi prepare playground",
-        "lint": "eslint --ext .ts --ext .vue .",
-        "prepublishOnly": "npm run build",
-        "release": "npm run test && release-it",
-        "prepack": "nuxt-module-build prepare",
-        "test": "vitest run"
-    },
-    "dependencies": {
-        "@nuxt/kit": "^3.8.0",
-        "svgo": "^3.0.2"
-    },
-    "devDependencies": {
-        "@nuxt/module-builder": "^0.5.2",
-        "@nuxt/test-utils": "latest",
-        "@nuxtjs/eslint-config-typescript": "latest",
-        "@types/svgo": "^2.6.4",
-        "eslint": "^8.52.0",
-        "nuxt": "^3.8.0",
-        "playwright": "^1.39.0",
-        "release-it": "^16.2.1",
-        "vitest": "^0.34.6"
-    },
-    "packageManager": "pnpm@8.1.0",
-    "pnpm": {
-        "peerDependencyRules": {
-            "allowedVersions": {
-                "vue": "^3.2.45"
-            },
-            "ignoreMissing": [
-                "webpack",
-                "vue"
-            ]
-        }
-    },
-    "release-it": {
-        "git": {
-            "commitMessage": "chore(release): release v${version}"
-        },
-        "github": {
-            "release": true,
-            "releaseName": "v${version}"
-        }
-    }
+	"name": "@poidet/svg-sprite",
+	"type": "module",
+	"version": "1.1.0",
+	"packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748",
+	"description": "Easy way to use and optimize svg files in Nuxt.js",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/poidet/svg-sprite.git"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/module.mjs",
+			"require": "./dist/module.cjs"
+		}
+	},
+	"main": "./dist/module.cjs",
+	"module": "./dist/module.mjs",
+	"types": "./dist/types.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "nuxt-module-build build",
+		"dev": "nuxi dev playground",
+		"dev:docs": "nuxi dev docs",
+		"dev:build": "nuxi build playground",
+		"dev:prepare": "nuxt-module-build build --stub && nuxi prepare playground",
+		"prepublishOnly": "npm run build",
+		"release": "npm run test && release-it",
+		"prepack": "nuxt-module-build prepare",
+		"test": "vitest run",
+		"lint": "pnpm run lint:code && pnpm run lint:format",
+		"lint:code": "eslint --cache --cache-strategy content .",
+		"lint:format": "prettier --check --cache --cache-strategy content .",
+		"fix": "pnpm run fix:code && pnpm run fix:format",
+		"fix:code": "eslint --fix --cache --cache-strategy content .",
+		"fix:format": "prettier --cache --cache-strategy content --write ."
+	},
+	"dependencies": {
+		"@nuxt/kit": "^4.0.3",
+		"svgo": "^4.0.0"
+	},
+	"devDependencies": {
+		"@nuxt/module-builder": "^1.0.2",
+		"@nuxt/test-utils": "latest",
+		"@nuxtjs/eslint-config-typescript": "latest",
+		"@prleasing/eslint": "^4.8.0",
+		"@prleasing/prettier": "^4.8.0",
+		"@types/svgo": "^2.6.4",
+		"eslint": "^9.33.0",
+		"eslint-plugin-format": "^1.0.1",
+		"nuxt": "^4.0.3",
+		"playwright": "^1.54.2",
+		"release-it": "^19.0.4",
+		"vitest": "^3.2.4"
+	},
+	"pnpm": {
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"vue": "^3.2.45"
+			},
+			"ignoreMissing": [
+				"webpack",
+				"vue"
+			]
+		}
+	},
+	"release-it": {
+		"git": {
+			"commitMessage": "chore(release): release v${version}"
+		},
+		"github": {
+			"release": true,
+			"releaseName": "v${version}"
+		}
+	}
 }

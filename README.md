@@ -3,8 +3,8 @@
 [![npm (scoped with tag)](https://img.shields.io/npm/v/@poidet/svg-sprite/latest.svg?style=flat-square)](https://npmjs.com/package/@poidet/svg-sprite)
 [![npm](https://img.shields.io/npm/dt/@poidet/svg-sprite.svg?style=flat-square)](https://npmjs.com/package/@poidet/svg-sprite)
 
-
-> ### This is a _fork_, a link to the original package 
+> ### This is a _fork_, a link to the original package
+>
 > **https://github.com/nuxt-modules/svg-sprite**
 
 > Optimized and Easy way to use SVG files in Nuxt
@@ -31,13 +31,11 @@ Add `@poidet/svg-sprite` to modules section of `nuxt.config`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: [
-    '@poidet/svg-sprite',
-  ],
-  svgSprite: {
-    // manipulate module options
-  }
-})
+	modules: ['@poidet/svg-sprite'],
+	svgSprite: {
+		// manipulate module options
+	}
+});
 ```
 
 Place your svg files in `~/assets/sprite/svg/`, say `sample.svg` and use your image with globally registered `svg-icon` component:
@@ -52,16 +50,15 @@ To create different sprites, create custom directory inside `~/assets/sprite/svg
 <svg-icon name="my-sprite/my-image" />
 ```
 
-Module create a page that list all of icons for you, by default you can see this page in `/_icons` path.  
+Module create a page that list all of icons for you, by default you can see this page in `/_icons` path.
 **Note:** This page creates in `dev` mode, So you can't see it in production.
 
 ## Options
 
 Module default options:
 
-
 | Option            | Default               | Description                                                                                              |
-|-------------------|-----------------------|----------------------------------------------------------------------------------------------------------|
+| ----------------- | --------------------- | -------------------------------------------------------------------------------------------------------- |
 | input             | `~/assets/sprite/svg` | Directory of original svg files                                                                          |
 | output            | `~/assets/sprite/gen` | Directory to store generated sprites                                                                     |
 | defaultSprite     | `icons`               | Name of default sprite (default sprite consist of all svgs that place directly inside `input` directory) |
@@ -75,26 +72,28 @@ Module default options:
 
 You can update them with the `svgSprite` option in `nuxt.config`:
 
-```js
+```ts
 export default defineNuxtConfig({
-  modules: ['@poidet/svg-sprite'],
-  svgSprite: {
-    input: '~/assets/svg/'
-  }
-}
+	modules: ['@poidet/svg-sprite'],
+	svgSprite: {
+		input: '~/assets/svg/'
+	}
+});
 ```
 
 ## Props
 
-| Prop | Description |
-| --- | --- |
-| name | icon path with format `SPRITE_NAME/ICON_NAME`, `SPRITE_NAME` can be omitted for default sprite  |
-| title | Accessibility title for icon, this props will transform to `<title>` tag inside `<svg>` |
-| desc | Accessibility description for icon, this props will transform to `<desc>` tag inside `<svg>` |
+| Prop  | Description                                                                                    |
+| ----- | ---------------------------------------------------------------------------------------------- |
+| name  | icon path with format `SPRITE_NAME/ICON_NAME`, `SPRITE_NAME` can be omitted for default sprite |
+| title | Accessibility title for icon, this props will transform to `<title>` tag inside `<svg>`        |
+| desc  | Accessibility description for icon, this props will transform to `<desc>` tag inside `<svg>`   |
 
 ## Integrations
+
 ### Storybook
-This module provides a story to list and search available icons of your project. You can see stories under `stories` directory. 
+
+This module provides a story to list and search available icons of your project. You can see stories under `stories` directory.
 If you are using [`@nuxtjs/storybook`](https://storybook.nuxtjs.org) you can see the SvgSprites stories under `Modules` section in your storybook. Sprites will show in your Storybook, unless you disable/hide the story using [Storybook's `modules` option](https://storybook.nuxtjs.org/options#modules)
 
 ## Development

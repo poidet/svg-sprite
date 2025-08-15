@@ -1,11 +1,8 @@
-import svgModule from '../src/module'
+import svgModule from '../src/module';
 
 export default defineNuxtConfig({
-  modules: [
-    // @ts-ignore
-    svgModule
-  ],
-  svgSprite: {
-    alias: '#icons'
-  }
-})
+	modules: [svgModule],
+	svgSprite: {
+		alias: '#icons'
+	}
+});
