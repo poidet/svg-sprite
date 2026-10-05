@@ -1,64 +1,57 @@
 import { fileURLToPath } from 'node:url';
-import { createPage, setup, url } from '@nuxt/test-utils';
-import { describe, expect } from 'vitest';
-/* eslint-disable no-undef */
+import { $fetch, setup } from '@nuxt/test-utils/e2e';
+import { describe, expect, it } from 'vitest';
+
+// The playground is built and served once; the checks read the rendered HTML and the
+// generated sprites, so no browser is needed (CI does not install one).
 describe('render module', async () => {
 	await setup({
 		rootDir: fileURLToPath(new URL('../playground', import.meta.url)),
-		server: true,
-		browser: true
-	});
-	let page;
-	let hrefs = [];
-
-	it('all svg files sould be exist', async () => {
-		page = await createPage();
-		await page.goto(url('/'));
-		hrefs = await page.evaluate(() => {
-			const elements = document.querySelectorAll('use');
-			return Array.from(elements).map((el) => el.getAttribute('href'));
-		});
-		const paths = hrefs.map((path) => path.split('#')[0]);
-		const sprites = Array.from(new Set(paths));
-
-		for (const sprite of sprites) {
-			const request = await page.goto(url(sprite));
-			expect(request.status()).toEqual(200);
-		}
+		server: true
 	});
 
-	it('all icon should be rendered and have width/height greater than zero', async () => {
-		await page.goto(url('/'));
+	const uses = (html) => Array.from(html.matchAll(/<use[^>]*\shref="([^"]+)"/g), ([, href]) => href);
+
+	it('every icon points to an existing sprite symbol', async () => {
+		const hrefs = uses(await $fetch('/'));
+		expect(hrefs.length).toBeGreaterThan(0);
+
 		for (const href of hrefs) {
-			const box = await page.evaluate((href) => {
-				const elements = Array.from(document.querySelectorAll('use')).filter((el) => el.getAttribute('href') === href);
-				if (elements.length === 0) {
-					return null;
-				}
-				const bbox = elements[0].getBBox();
-				return {
-					width: bbox.width,
-					height: bbox.height
-				};
-			}, href);
-			expect(typeof box).toEqual('object');
-			expect(box.width).toBeGreaterThan(0);
-			expect(box.height).toBeGreaterThan(0);
+			const [path, id] = href.split('#');
+			// Browsers do not render <use> pointing at a data: URL, so a sprite must stay a file.
+			expect(path.startsWith('data:'), href).toBe(false);
+
+			const sprite = await $fetch(path, { responseType: 'text' });
+			expect(sprite, href).toContain(`id="${id}"`);
 		}
 	});
 
-	it('<defs> should not have any content', async () => {
-		page = await createPage();
-		await page.goto(url('/empty-defs'));
+	it('every referenced symbol keeps a non-empty viewBox', async () => {
+		for (const href of uses(await $fetch('/'))) {
+			const [path, id] = href.split('#');
+			const sprite = await $fetch(path, { responseType: 'text' });
+			const symbol = sprite.match(new RegExp(`<symbol[^>]*\\sid="${id}"[^>]*>`))?.[0] ?? '';
+			const [, , , width, height] =
+				symbol.match(/viewBox="([\d.-]+)[\s,]+([\d.-]+)[\s,]+([\d.]+)[\s,]+([\d.]+)"/) ?? [];
 
-		const spritePath = await page.evaluate(() => {
-			const element = document.querySelector('.add-icon use');
-			return element.getAttribute('href');
-		});
+			expect(Number(width), href).toBeGreaterThan(0);
+			expect(Number(height), href).toBeGreaterThan(0);
+		}
+	});
 
-		await page.goto(url(spritePath));
-		const content = await page.content();
+	// The icon's <defs> are moved out of its <symbol> into the sprite-level <defs>
+	// (generateSprite), so references inside the symbol still resolve.
+	it('<defs> of an icon move out of its symbol into the sprite', async () => {
+		const [href] = uses(await $fetch('/empty-defs'));
+		const [path, id] = href.split('#');
+		const sprite = await $fetch(path, { responseType: 'text' });
+		const symbol = sprite.match(new RegExp(`<symbol[^>]*\\sid="${id}"[^>]*>([\\s\\S]*?)</symbol>`))?.[1] ?? '';
+		const refs = Array.from(symbol.matchAll(/(?:href="#|url\(#)([^")]+)/g), ([, ref]) => ref);
 
-		expect(content).toContain('<defs/>');
+		expect(symbol).not.toContain('<defs');
+		expect(refs.length).toBeGreaterThan(0);
+		for (const ref of refs) {
+			expect(sprite, ref).toContain(`id="${ref}"`);
+		}
 	});
 });
