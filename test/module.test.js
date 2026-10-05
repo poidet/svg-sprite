@@ -54,4 +54,14 @@ describe('render module', async () => {
 			expect(sprite, ref).toContain(`id="${ref}"`);
 		}
 	});
+
+	// add.svg and remove.svg both define <path id="a">; in a shared sprite one would win.
+	it('ids are unique within a sprite', async () => {
+		const [href] = uses(await $fetch('/empty-defs'));
+		const sprite = await $fetch(href.split('#')[0], { responseType: 'text' });
+		const ids = Array.from(sprite.matchAll(/\sid="([^"]+)"/g), ([, id]) => id);
+
+		expect(ids.length).toBeGreaterThan(2);
+		expect(ids).toEqual([...new Set(ids)]);
+	});
 });
