@@ -90,15 +90,14 @@ function extractDefs(svg: SVG) {
 }
 
 async function optimizeSVG(svg: SVG, optimizeOptions: Config = {}) {
-	const plugins: any[] = optimizeOptions.plugins || [];
-	const presetDefault = plugins.find((p) => p.name === 'preset-default');
+	// All icons of a sprite share one document, so their ids (cleanupIds shortens them
+	// to "a", "b"…) must not collide. cleanupIds has no prefix option since SVGO 3.
+	const plugins = [
+		...(optimizeOptions.plugins || []),
+		{ name: 'prefixIds', params: { prefix: svg.name, prefixClassNames: false } }
+	] as Config['plugins'];
 
-	presetDefault.params.overrides.cleanupIds = {
-		...presetDefault.params.overrides.cleanupIds,
-		prefix: `${svg.name}-`
-	};
-
-	const $data = await optimize(svg.content, optimizeOptions);
+	const $data = await optimize(svg.content, { ...optimizeOptions, plugins });
 
 	return {
 		...svg,
