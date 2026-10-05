@@ -47,7 +47,8 @@ export default defineNuxtModule<ModuleOptions>({
 					name: 'preset-default',
 					params: {
 						overrides: {
-							removeViewBox: false,
+							// No removeViewBox override: SVGO 4 dropped it from preset-default (viewBox is kept),
+							// and overriding a plugin that is not in the preset warns on every icon.
 							// Make all styles inline By definition, a defs sprite is not usable as a CSS sprite
 							inlineStyles: {
 								onlyMatchedOnce: false
@@ -57,7 +58,7 @@ export default defineNuxtModule<ModuleOptions>({
 				},
 				{ name: 'cleanupIds', params: {} },
 				{ name: 'removeXMLNS' },
-				// Disable removeViewBox plugin and enable removeDimensions
+				// Enable removeDimensions: the size comes from viewBox
 				{ name: 'removeDimensions' },
 				// Enable removeAttrs plugin, Remove id attribute to prevent conflict with our id
 				{
